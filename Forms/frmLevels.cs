@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace LevelBuilderManager
 {
@@ -35,6 +30,31 @@ namespace LevelBuilderManager
             //When the return button is clicked, close this form (which will trigger the FormClosed event and show the main menu)
             frmOriginal.Show();
             this.Close();
+        }
+
+        private void frmLevels_Load(object sender, EventArgs e)
+        {
+            string connLevels = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = LevelsDatabase; Integrated Security = True; " +
+                "Connect Timeout = 30; Encrypt = True; Trust Server Certificate = False; Application Intent = ReadWrite; Multi Subnet Failover = False; Command Timeout = 30;";
+
+            using SqlConnection sqlLevelsConn = new SqlConnection(connLevels);
+            {
+                //Open the connection to the database
+                sqlLevelsConn.Open();
+
+                //Query to select all records from the Levels table
+                string sqlLevelsQuery = "SELECT * FROM Levels";
+
+                // Create a SqlDataAdapter to execute the query and fill a DataTable
+                SqlDataAdapter sqlLevelAdapter = new SqlDataAdapter(sqlLevelsQuery, sqlLevelsConn);
+
+                //Fill a DataTable with the results of the query
+                DataTable dtLevels = new DataTable();
+                sqlLevelAdapter.Fill(dtLevels);
+
+                //Bind the DataTable to the DataGridView to display the levels
+                dgvLevelsManager.DataSource = dtLevels;
+            }
         }
     }
 }
