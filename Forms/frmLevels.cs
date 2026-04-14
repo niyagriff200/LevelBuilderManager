@@ -19,17 +19,18 @@ namespace LevelBuilderManager
             frmOriginal = mainMenuObj;
         }
 
-        /*private void frmLevels_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            //When this form is closed, show the main menu again
-            frmOriginal.Show();
-        }*/
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
             //When the return button is clicked, close this form (which will trigger the FormClosed event and show the main menu)
             frmOriginal.Show();
             this.Close();
+        }
+
+        private void frmLevels_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //When the form is closing, show the main menu again
+            frmOriginal.Show();
         }
 
         private void frmLevels_Load(object sender, EventArgs e)

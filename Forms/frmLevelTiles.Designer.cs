@@ -146,6 +146,7 @@
             Controls.Add(btnReturn);
             Name = "frmLevelTiles";
             Text = "Level Builder Manager - Level Tiles";
+            FormClosing += frmLevelTiles_FormClosing;
             Load += frmLevelTiles_Load;
             ((System.ComponentModel.ISupportInitialize)dgvLevelTilesManager).EndInit();
             ((System.ComponentModel.ISupportInitialize)numTileCount).EndInit();

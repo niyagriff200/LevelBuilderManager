@@ -145,6 +145,7 @@
             Controls.Add(btnReturn);
             Name = "frmLevels";
             Text = "Level Builder Manager - Levels";
+            FormClosing += frmLevels_FormClosing;
             Load += frmLevels_Load;
             ((System.ComponentModel.ISupportInitialize)dgvLevelsManager).EndInit();
             ((System.ComponentModel.ISupportInitialize)numDifficultyEntry).EndInit();

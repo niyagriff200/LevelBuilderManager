@@ -148,6 +148,7 @@
             Controls.Add(btnReturn);
             Name = "frmTiles";
             Text = "Level Builder Manager - Tiles";
+            FormClosing += frmTiles_FormClosing;
             Load += frmTiles_Load;
             ((System.ComponentModel.ISupportInitialize)dgvTilesManager).EndInit();
             ResumeLayout(false);

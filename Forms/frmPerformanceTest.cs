@@ -30,5 +30,11 @@ namespace LevelBuilderManager
             frmOriginal.Show();
             this.Close();
         }
+
+        private void frmPerformanceTest_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //When the form is closing, show the main menu again
+            frmOriginal.Show();
+        }
     }
 }

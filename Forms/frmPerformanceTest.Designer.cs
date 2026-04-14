@@ -39,7 +39,7 @@
             btnReturn.TabIndex = 1;
             btnReturn.Text = "Return to Menu";
             btnReturn.UseVisualStyleBackColor = true;
-            btnReturn.Click += this.btnReturn_Click;
+            btnReturn.Click += btnReturn_Click;
             // 
             // frmPerformanceTest
             // 
@@ -49,6 +49,7 @@
             Controls.Add(btnReturn);
             Name = "frmPerformanceTest";
             Text = "Level Builder Manager - Performance Test";
+            FormClosing += frmPerformanceTest_FormClosing;
             ResumeLayout(false);
         }
 

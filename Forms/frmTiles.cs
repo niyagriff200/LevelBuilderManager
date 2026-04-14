@@ -32,6 +32,12 @@ namespace LevelBuilderManager
             this.Close();
         }
 
+        private void frmTiles_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //When the form is closing, show the main menu again
+            frmOriginal.Show();
+        }
+
         private void frmTiles_Load(object sender, EventArgs e)
         {
             string connTiles = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = TilesDatabase; Integrated Security = True; " +
