@@ -44,7 +44,7 @@
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(35, 50);
+            btnReturn.Location = new Point(12, 12);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(246, 58);
             btnReturn.TabIndex = 0;
@@ -63,21 +63,21 @@
             // 
             // txtNameEntry
             // 
-            txtNameEntry.Location = new Point(31, 234);
+            txtNameEntry.Location = new Point(31, 181);
             txtNameEntry.Name = "txtNameEntry";
             txtNameEntry.Size = new Size(250, 47);
             txtNameEntry.TabIndex = 2;
             // 
             // txtThemeEntry
             // 
-            txtThemeEntry.Location = new Point(31, 368);
+            txtThemeEntry.Location = new Point(31, 338);
             txtThemeEntry.Name = "txtThemeEntry";
             txtThemeEntry.Size = new Size(250, 47);
             txtThemeEntry.TabIndex = 3;
             // 
             // numDifficultyEntry
             // 
-            numDifficultyEntry.Location = new Point(31, 495);
+            numDifficultyEntry.Location = new Point(31, 484);
             numDifficultyEntry.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             numDifficultyEntry.Name = "numDifficultyEntry";
             numDifficultyEntry.Size = new Size(300, 47);
@@ -86,7 +86,7 @@
             // lbName
             // 
             lbName.AutoSize = true;
-            lbName.Location = new Point(35, 179);
+            lbName.Location = new Point(35, 124);
             lbName.Name = "lbName";
             lbName.Size = new Size(97, 41);
             lbName.TabIndex = 5;
@@ -95,7 +95,7 @@
             // lbTheme
             // 
             lbTheme.AutoSize = true;
-            lbTheme.Location = new Point(35, 309);
+            lbTheme.Location = new Point(35, 262);
             lbTheme.Name = "lbTheme";
             lbTheme.Size = new Size(109, 41);
             lbTheme.TabIndex = 6;
@@ -104,7 +104,7 @@
             // lbDifficulty
             // 
             lbDifficulty.AutoSize = true;
-            lbDifficulty.Location = new Point(35, 434);
+            lbDifficulty.Location = new Point(31, 417);
             lbDifficulty.Name = "lbDifficulty";
             lbDifficulty.Size = new Size(134, 41);
             lbDifficulty.TabIndex = 7;
@@ -112,7 +112,7 @@
             // 
             // btnAddLevel
             // 
-            btnAddLevel.Location = new Point(35, 614);
+            btnAddLevel.Location = new Point(31, 608);
             btnAddLevel.Name = "btnAddLevel";
             btnAddLevel.Size = new Size(189, 58);
             btnAddLevel.TabIndex = 8;
@@ -121,7 +121,7 @@
             // 
             // btnDeleteLevel
             // 
-            btnDeleteLevel.Location = new Point(35, 713);
+            btnDeleteLevel.Location = new Point(250, 608);
             btnDeleteLevel.Name = "btnDeleteLevel";
             btnDeleteLevel.Size = new Size(189, 58);
             btnDeleteLevel.TabIndex = 9;

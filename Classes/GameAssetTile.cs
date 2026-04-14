@@ -6,13 +6,13 @@ namespace LevelBuilderManager.Classes
 {
     public class GameAssetTile : GameAsset
     {
-        private string tileCategory;
+        private string tileType;
         private bool canBeWalkedOn;
 
-        public string TileCategory
+        public string TileType
         {
-            get { return tileCategory; }
-            set { tileCategory = value; }
+            get { return tileType; }
+            set { tileType = value; }
         }
 
         public bool CanBeWalkedOn
@@ -21,9 +21,9 @@ namespace LevelBuilderManager.Classes
             set { canBeWalkedOn = value; }
         }
 
-        public GameAssetTile(string AssetID, string AssetName, string TileCategory, bool CanBeWalkedOn) : base(AssetID, AssetName)
+        public GameAssetTile(string AssetID, string AssetName, string TileType, bool CanBeWalkedOn) : base(AssetID, AssetName)
         {
-            tileCategory = TileCategory;
+            tileType = TileType;
             canBeWalkedOn = CanBeWalkedOn;
         }
     }
