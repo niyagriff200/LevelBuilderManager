@@ -29,11 +29,15 @@
         private void InitializeComponent()
         {
             btnReturn = new Button();
+            btnTestDataTable = new Button();
+            btnTestReaderLoad = new Button();
+            lbDataTableResult = new Label();
+            lbReaderLoadResult = new Label();
             SuspendLayout();
             // 
             // btnReturn
             // 
-            btnReturn.Location = new Point(21, 37);
+            btnReturn.Location = new Point(12, 12);
             btnReturn.Name = "btnReturn";
             btnReturn.Size = new Size(240, 58);
             btnReturn.TabIndex = 1;
@@ -41,20 +45,65 @@
             btnReturn.UseVisualStyleBackColor = true;
             btnReturn.Click += btnReturn_Click;
             // 
+            // btnTestDataTable
+            // 
+            btnTestDataTable.Location = new Point(55, 179);
+            btnTestDataTable.Name = "btnTestDataTable";
+            btnTestDataTable.Size = new Size(300, 58);
+            btnTestDataTable.TabIndex = 2;
+            btnTestDataTable.Text = "Test Data Table Load";
+            btnTestDataTable.UseVisualStyleBackColor = true;
+            btnTestDataTable.Click += btnTestDataTable_Click;
+            // 
+            // btnTestReaderLoad
+            // 
+            btnTestReaderLoad.Location = new Point(55, 265);
+            btnTestReaderLoad.Name = "btnTestReaderLoad";
+            btnTestReaderLoad.Size = new Size(300, 58);
+            btnTestReaderLoad.TabIndex = 3;
+            btnTestReaderLoad.Text = "Test Reader Load";
+            btnTestReaderLoad.UseVisualStyleBackColor = true;
+            btnTestReaderLoad.Click += btnTestReaderLoad_Click;
+            // 
+            // lbDataTableResult
+            // 
+            lbDataTableResult.AutoSize = true;
+            lbDataTableResult.Location = new Point(383, 188);
+            lbDataTableResult.Name = "lbDataTableResult";
+            lbDataTableResult.Size = new Size(0, 41);
+            lbDataTableResult.TabIndex = 4;
+            // 
+            // lbReaderLoadResult
+            // 
+            lbReaderLoadResult.AutoSize = true;
+            lbReaderLoadResult.Location = new Point(383, 274);
+            lbReaderLoadResult.Name = "lbReaderLoadResult";
+            lbReaderLoadResult.Size = new Size(0, 41);
+            lbReaderLoadResult.TabIndex = 5;
+            // 
             // frmPerformanceTest
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1120, 772);
+            Controls.Add(lbReaderLoadResult);
+            Controls.Add(lbDataTableResult);
+            Controls.Add(btnTestReaderLoad);
+            Controls.Add(btnTestDataTable);
             Controls.Add(btnReturn);
             Name = "frmPerformanceTest";
             Text = "Level Builder Manager - Performance Test";
             FormClosing += frmPerformanceTest_FormClosing;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button btnReturn;
+        private Button btnTestDataTable;
+        private Button btnTestReaderLoad;
+        private Label lbDataTableResult;
+        private Label lbReaderLoadResult;
     }
 }

@@ -38,8 +38,13 @@
             lbDifficulty = new Label();
             btnAddLevel = new Button();
             btnDeleteLevel = new Button();
+            lbMessage = new Label();
+            numEnemyCount = new NumericUpDown();
+            lbEnemyCount = new Label();
+            btnUpdateLevel = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvLevelsManager).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDifficultyEntry).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numEnemyCount).BeginInit();
             SuspendLayout();
             // 
             // btnReturn
@@ -60,24 +65,25 @@
             dgvLevelsManager.RowHeadersWidth = 102;
             dgvLevelsManager.Size = new Size(1080, 703);
             dgvLevelsManager.TabIndex = 1;
+            dgvLevelsManager.CellClick += dgvLevelsManager_CellClick;
             // 
             // txtNameEntry
             // 
-            txtNameEntry.Location = new Point(31, 181);
+            txtNameEntry.Location = new Point(31, 167);
             txtNameEntry.Name = "txtNameEntry";
             txtNameEntry.Size = new Size(250, 47);
             txtNameEntry.TabIndex = 2;
             // 
             // txtThemeEntry
             // 
-            txtThemeEntry.Location = new Point(31, 338);
+            txtThemeEntry.Location = new Point(31, 291);
             txtThemeEntry.Name = "txtThemeEntry";
             txtThemeEntry.Size = new Size(250, 47);
             txtThemeEntry.TabIndex = 3;
             // 
             // numDifficultyEntry
             // 
-            numDifficultyEntry.Location = new Point(31, 484);
+            numDifficultyEntry.Location = new Point(31, 430);
             numDifficultyEntry.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
             numDifficultyEntry.Name = "numDifficultyEntry";
             numDifficultyEntry.Size = new Size(300, 47);
@@ -86,7 +92,7 @@
             // lbName
             // 
             lbName.AutoSize = true;
-            lbName.Location = new Point(35, 124);
+            lbName.Location = new Point(31, 114);
             lbName.Name = "lbName";
             lbName.Size = new Size(97, 41);
             lbName.TabIndex = 5;
@@ -95,7 +101,7 @@
             // lbTheme
             // 
             lbTheme.AutoSize = true;
-            lbTheme.Location = new Point(35, 262);
+            lbTheme.Location = new Point(31, 235);
             lbTheme.Name = "lbTheme";
             lbTheme.Size = new Size(109, 41);
             lbTheme.TabIndex = 6;
@@ -104,7 +110,7 @@
             // lbDifficulty
             // 
             lbDifficulty.AutoSize = true;
-            lbDifficulty.Location = new Point(31, 417);
+            lbDifficulty.Location = new Point(31, 367);
             lbDifficulty.Name = "lbDifficulty";
             lbDifficulty.Size = new Size(134, 41);
             lbDifficulty.TabIndex = 7;
@@ -112,27 +118,68 @@
             // 
             // btnAddLevel
             // 
-            btnAddLevel.Location = new Point(31, 608);
+            btnAddLevel.Location = new Point(12, 651);
             btnAddLevel.Name = "btnAddLevel";
             btnAddLevel.Size = new Size(189, 58);
             btnAddLevel.TabIndex = 8;
             btnAddLevel.Text = "Add Level";
             btnAddLevel.UseVisualStyleBackColor = true;
+            btnAddLevel.Click += btnAddLevel_Click;
             // 
             // btnDeleteLevel
             // 
-            btnDeleteLevel.Location = new Point(250, 608);
+            btnDeleteLevel.Location = new Point(207, 651);
             btnDeleteLevel.Name = "btnDeleteLevel";
             btnDeleteLevel.Size = new Size(189, 58);
             btnDeleteLevel.TabIndex = 9;
             btnDeleteLevel.Text = "Delete Level";
             btnDeleteLevel.UseVisualStyleBackColor = true;
+            btnDeleteLevel.Click += btnDeleteLevel_Click;
+            // 
+            // lbMessage
+            // 
+            lbMessage.AutoSize = true;
+            lbMessage.Location = new Point(258, 724);
+            lbMessage.Name = "lbMessage";
+            lbMessage.Size = new Size(0, 41);
+            lbMessage.TabIndex = 10;
+            // 
+            // numEnemyCount
+            // 
+            numEnemyCount.Location = new Point(31, 571);
+            numEnemyCount.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
+            numEnemyCount.Name = "numEnemyCount";
+            numEnemyCount.Size = new Size(300, 47);
+            numEnemyCount.TabIndex = 11;
+            // 
+            // lbEnemyCount
+            // 
+            lbEnemyCount.AutoSize = true;
+            lbEnemyCount.Location = new Point(31, 510);
+            lbEnemyCount.Name = "lbEnemyCount";
+            lbEnemyCount.Size = new Size(196, 41);
+            lbEnemyCount.TabIndex = 12;
+            lbEnemyCount.Text = "Enemy Count";
+            // 
+            // btnUpdateLevel
+            // 
+            btnUpdateLevel.Location = new Point(12, 715);
+            btnUpdateLevel.Name = "btnUpdateLevel";
+            btnUpdateLevel.Size = new Size(207, 58);
+            btnUpdateLevel.TabIndex = 13;
+            btnUpdateLevel.Text = "Update Level";
+            btnUpdateLevel.UseVisualStyleBackColor = true;
+            btnUpdateLevel.Click += btnUpdateLevel_Click;
             // 
             // frmLevels
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1642, 829);
+            Controls.Add(btnUpdateLevel);
+            Controls.Add(lbEnemyCount);
+            Controls.Add(numEnemyCount);
+            Controls.Add(lbMessage);
             Controls.Add(btnDeleteLevel);
             Controls.Add(btnAddLevel);
             Controls.Add(lbDifficulty);
@@ -149,6 +196,7 @@
             Load += frmLevels_Load;
             ((System.ComponentModel.ISupportInitialize)dgvLevelsManager).EndInit();
             ((System.ComponentModel.ISupportInitialize)numDifficultyEntry).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numEnemyCount).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -165,5 +213,9 @@
         private Label lbDifficulty;
         private Button btnAddLevel;
         private Button btnDeleteLevel;
+        private Label lbMessage;
+        private NumericUpDown numEnemyCount;
+        private Label lbEnemyCount;
+        private Button btnUpdateLevel;
     }
 }

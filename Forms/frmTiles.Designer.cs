@@ -38,6 +38,8 @@
             dgvTilesManager = new DataGridView();
             cbCanBeWalkedOn = new CheckBox();
             lbCanBeWalkedOn = new Label();
+            lbMessage = new Label();
+            btnUpdateTile = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvTilesManager).BeginInit();
             SuspendLayout();
             // 
@@ -53,12 +55,13 @@
             // 
             // btnDeleteTile
             // 
-            btnDeleteTile.Location = new Point(240, 665);
+            btnDeleteTile.Location = new Point(207, 665);
             btnDeleteTile.Name = "btnDeleteTile";
             btnDeleteTile.Size = new Size(189, 58);
             btnDeleteTile.TabIndex = 18;
             btnDeleteTile.Text = "Delete Tile";
             btnDeleteTile.UseVisualStyleBackColor = true;
+            btnDeleteTile.Click += btnDeleteTile_Click;
             // 
             // btnAddTile
             // 
@@ -68,6 +71,7 @@
             btnAddTile.TabIndex = 17;
             btnAddTile.Text = "Add Tile";
             btnAddTile.UseVisualStyleBackColor = true;
+            btnAddTile.Click += btnAddTile_Click;
             // 
             // lbType
             // 
@@ -109,6 +113,7 @@
             dgvTilesManager.RowHeadersWidth = 102;
             dgvTilesManager.Size = new Size(1080, 703);
             dgvTilesManager.TabIndex = 10;
+            dgvTilesManager.CellClick += dgvTilesManager_CellClick;
             // 
             // cbCanBeWalkedOn
             // 
@@ -131,11 +136,31 @@
             lbCanBeWalkedOn.TabIndex = 20;
             lbCanBeWalkedOn.Text = "Can Be Walked On";
             // 
+            // lbMessage
+            // 
+            lbMessage.AutoSize = true;
+            lbMessage.Location = new Point(243, 738);
+            lbMessage.Name = "lbMessage";
+            lbMessage.Size = new Size(0, 41);
+            lbMessage.TabIndex = 21;
+            // 
+            // btnUpdateTile
+            // 
+            btnUpdateTile.Location = new Point(12, 729);
+            btnUpdateTile.Name = "btnUpdateTile";
+            btnUpdateTile.Size = new Size(189, 58);
+            btnUpdateTile.TabIndex = 22;
+            btnUpdateTile.Text = "Update Tile";
+            btnUpdateTile.UseVisualStyleBackColor = true;
+            btnUpdateTile.Click += btnUpdateTile_Click;
+            // 
             // frmTiles
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1676, 880);
+            Controls.Add(btnUpdateTile);
+            Controls.Add(lbMessage);
             Controls.Add(lbCanBeWalkedOn);
             Controls.Add(cbCanBeWalkedOn);
             Controls.Add(btnDeleteTile);
@@ -167,5 +192,7 @@
         private DataGridView dgvTilesManager;
         private CheckBox cbCanBeWalkedOn;
         private Label lbCanBeWalkedOn;
+        private Label lbMessage;
+        private Button btnUpdateTile;
     }
 }

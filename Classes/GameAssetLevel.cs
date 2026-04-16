@@ -6,27 +6,16 @@ namespace LevelBuilderManager.Classes
 {
     public class GameAssetLevel : GameAsset
     {
-        private string levelDifficulty;
-        private string levelTheme;
+        public string Theme { get; set; }
+        public int Difficulty { get; set; }
+        public int EnemyCount { get; set; }
 
-        public string LevelDifficulty
+
+        public GameAssetLevel(int AssetID, string AssetName, int LevelDifficulty, string LevelTheme, int LevelEnemyCount) : base(AssetID, AssetName)
         {
-            get { return levelDifficulty; }
-            set { levelDifficulty = value; }
-        }
-
-        public string LevelTheme
-        {
-            get { return levelTheme; }
-            set { levelTheme = value; }
-        }
-
-
-        public GameAssetLevel(string AssetID, string AssetName, string LevelDifficulty, string LevelTheme) : base(AssetID, AssetName)
-        {
-            levelDifficulty = LevelDifficulty;
-            levelTheme = LevelTheme;
-
+            Difficulty = LevelDifficulty;
+            Theme = LevelTheme;
+            this.EnemyCount = LevelEnemyCount;
         }
     }
 }

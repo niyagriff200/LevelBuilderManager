@@ -6,25 +6,13 @@ namespace LevelBuilderManager.Classes
 {
     public class GameAssetTile : GameAsset
     {
-        private string tileType;
-        private bool canBeWalkedOn;
+        public string Type { get; set; }
+        public bool CanBeWalkedOn { get; set; } = true;
 
-        public string TileType
+        public GameAssetTile(int AssetID, string AssetName, string TileType, bool TileCanBeWalkedOn) : base(AssetID, AssetName)
         {
-            get { return tileType; }
-            set { tileType = value; }
-        }
-
-        public bool CanBeWalkedOn
-        {
-            get { return canBeWalkedOn; }
-            set { canBeWalkedOn = value; }
-        }
-
-        public GameAssetTile(string AssetID, string AssetName, string TileType, bool CanBeWalkedOn) : base(AssetID, AssetName)
-        {
-            tileType = TileType;
-            canBeWalkedOn = CanBeWalkedOn;
+            Type = TileType;
+            CanBeWalkedOn = TileCanBeWalkedOn;
         }
     }
 }

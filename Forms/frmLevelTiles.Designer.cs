@@ -38,6 +38,8 @@
             numTileCount = new NumericUpDown();
             cmbLevelNameID = new ComboBox();
             cmbTileNameID = new ComboBox();
+            lbMessage = new Label();
+            btnUpdateLevelTile = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvLevelTilesManager).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numTileCount).BeginInit();
             SuspendLayout();
@@ -63,21 +65,23 @@
             // 
             // btnDeleteLevelTile
             // 
-            btnDeleteLevelTile.Location = new Point(241, 638);
+            btnDeleteLevelTile.Location = new Point(252, 611);
             btnDeleteLevelTile.Name = "btnDeleteLevelTile";
-            btnDeleteLevelTile.Size = new Size(189, 58);
+            btnDeleteLevelTile.Size = new Size(251, 58);
             btnDeleteLevelTile.TabIndex = 27;
             btnDeleteLevelTile.Text = "Delete Level Tile";
             btnDeleteLevelTile.UseVisualStyleBackColor = true;
+            btnDeleteLevelTile.Click += btnDeleteLevelTile_Click;
             // 
             // btnAddLevelTile
             // 
-            btnAddLevelTile.Location = new Point(13, 638);
+            btnAddLevelTile.Location = new Point(12, 611);
             btnAddLevelTile.Name = "btnAddLevelTile";
-            btnAddLevelTile.Size = new Size(189, 58);
+            btnAddLevelTile.Size = new Size(240, 58);
             btnAddLevelTile.TabIndex = 26;
             btnAddLevelTile.Text = "Add Level Tiles";
             btnAddLevelTile.UseVisualStyleBackColor = true;
+            btnAddLevelTile.Click += btnAddLevelTile_Click;
             // 
             // lbTileNameID
             // 
@@ -105,6 +109,7 @@
             dgvLevelTilesManager.RowHeadersWidth = 102;
             dgvLevelTilesManager.Size = new Size(1080, 703);
             dgvLevelTilesManager.TabIndex = 21;
+            dgvLevelTilesManager.CellClick += dgvLevelTilesManager_CellClick;
             // 
             // numTileCount
             // 
@@ -129,11 +134,31 @@
             cmbTileNameID.Size = new Size(302, 49);
             cmbTileNameID.TabIndex = 32;
             // 
+            // lbMessage
+            // 
+            lbMessage.AutoSize = true;
+            lbMessage.Location = new Point(264, 684);
+            lbMessage.Name = "lbMessage";
+            lbMessage.Size = new Size(0, 41);
+            lbMessage.TabIndex = 33;
+            // 
+            // btnUpdateLevelTile
+            // 
+            btnUpdateLevelTile.Location = new Point(12, 675);
+            btnUpdateLevelTile.Name = "btnUpdateLevelTile";
+            btnUpdateLevelTile.Size = new Size(240, 58);
+            btnUpdateLevelTile.TabIndex = 34;
+            btnUpdateLevelTile.Text = "Update Level Tiles";
+            btnUpdateLevelTile.UseVisualStyleBackColor = true;
+            btnUpdateLevelTile.Click += btnUpdateLevelTile_Click;
+            // 
             // frmLevelTiles
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1677, 798);
+            Controls.Add(btnUpdateLevelTile);
+            Controls.Add(lbMessage);
             Controls.Add(cmbTileNameID);
             Controls.Add(cmbLevelNameID);
             Controls.Add(numTileCount);
@@ -168,5 +193,7 @@
         private NumericUpDown numTileCount;
         private ComboBox cmbLevelNameID;
         private ComboBox cmbTileNameID;
+        private Label lbMessage;
+        private Button btnUpdateLevelTile;
     }
 }

@@ -6,11 +6,11 @@ namespace LevelBuilderManager.Classes
 {
     public class GameAsset
     {
-        private string assetID;
+        private int assetID;
         private string assetName;
         
 
-        public string AssetID
+        public int AssetID
         {
             get { return assetID; }
             set { assetID = value; }
@@ -22,10 +22,10 @@ namespace LevelBuilderManager.Classes
             set { assetName = value; }
         }
 
-        public GameAsset(string AssetID, string AssetName)
+        public GameAsset(int AssetID, string AssetName)
         {
-            assetID = AssetID;
-            assetName = AssetName;
+            this.assetID = AssetID;
+            this.assetName = AssetName;
         }
     }
 }

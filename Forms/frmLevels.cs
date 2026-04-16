@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using LevelBuilderManager.Classes;
+using LevelBuilderManager.Data;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace LevelBuilderManager
@@ -33,29 +35,162 @@ namespace LevelBuilderManager
             frmOriginal.Show();
         }
 
+        // This event handler is triggered when the form loads, and it calls the LoadData method to populate the DataGridView with level data from the database.
         private void frmLevels_Load(object sender, EventArgs e)
         {
-            string connLevels = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = LevelsDatabase; Integrated Security = True; " +
-                "Connect Timeout = 30; Encrypt = True; Trust Server Certificate = False; Application Intent = ReadWrite; Multi Subnet Failover = False; Command Timeout = 30;";
+            LoadData();
+        }
+
+        // This method loads the level data from the database and populates the DataGridView when the form loads.
+        private void LoadData()
+        {
+            string connLevels = DBHelper.GetConnection().ConnectionString; // Get the connection string for the database using the DBHelper class, which abstracts away the details of database connectivity
 
             using SqlConnection sqlLevelsConn = new SqlConnection(connLevels);
             {
-                //Open the connection to the database
-                sqlLevelsConn.Open();
-
-                //Query to select all records from the Levels table
-                string sqlLevelsQuery = "SELECT * FROM Levels";
-
-                // Create a SqlDataAdapter to execute the query and fill a DataTable
-                SqlDataAdapter sqlLevelAdapter = new SqlDataAdapter(sqlLevelsQuery, sqlLevelsConn);
-
-                //Fill a DataTable with the results of the query
-                DataTable dtLevels = new DataTable();
-                sqlLevelAdapter.Fill(dtLevels);
-
-                //Bind the DataTable to the DataGridView to display the levels
-                dgvLevelsManager.DataSource = dtLevels;
+                //When the form loads, populate the DataGridView with all levels from the database
+                dgvLevelsManager.DataSource = DBHelper.ExecuteRead("SELECT * FROM Levels", new Dictionary<string, object>());
             }
         }
+
+        // This event handler adds a new level to the database when the "Add Level" button is clicked.
+        private void btnAddLevel_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNameEntry.Text) || string.IsNullOrWhiteSpace(txtThemeEntry.Text))
+            {
+                lbMessage.Text = "Please fill in all fields.";
+                return;
+            }
+
+            GameAssetLevel level = FormToLevel(); // Convert the form input fields into a GameAssetLevel object to prepare for insertion into the database
+
+            string sql = @"INSERT INTO Levels (Name, Theme, Difficulty, [Enemy Count])
+                   VALUES (@name, @theme, @difficulty, @enemyCount)"; // SQL query to insert a new level into the Levels table, using parameters to prevent SQL injection
+
+            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the properties of the GameAssetLevel object
+            {
+                {"@name", level.AssetName},
+                {"@theme", level.Theme},
+                {"@difficulty", level.Difficulty},
+                {"@enemyCount", level.EnemyCount}
+            };
+
+            int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the insert query and get the number of affected rows to determine if the insert was successful
+
+            if (rows > 0) // If at least one row was affected, the insert was successful
+                lbMessage.Text = "Level added successfully!";
+            else
+                lbMessage.Text = "No level was added.";
+
+            LoadData();// Refresh the DataGridView to show the newly added level
+        }
+
+        // This event handler deletes the selected level from the database when the "Delete Level" button is clicked.
+        private void btnDeleteLevel_Click(object sender, EventArgs e)
+        {
+            if (dgvLevelsManager.SelectedRows.Count == 0) // Check if a row is selected
+            {
+                lbMessage.Text = "Select a level to delete.";
+                return;
+            }
+            GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]); // Convert the selected row to a GameAssetLevel object to get the ID for deletion
+
+            string sql = "DELETE FROM Levels WHERE Id = @id";
+
+            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected level
+            {
+                {"@id", level.AssetID}
+            };
+
+            int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+
+            if (rows > 0) // If at least one row was affected, the delete was successful
+                lbMessage.Text = "Level deleted.";
+            else
+                lbMessage.Text = "Delete failed.";
+
+            LoadData(); // Refresh the DataGridView to reflect the changes in the database
+        }
+
+        // This event handler populates the form input fields with the data from the selected row in the DataGridView,
+        private void dgvLevelsManager_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) // Ensure that a valid row is clicked (not the header)
+            {
+                DataGridViewRow row = dgvLevelsManager.Rows[e.RowIndex];
+
+                txtNameEntry.Text = row.Cells["Name"].Value.ToString();
+                txtThemeEntry.Text = row.Cells["Theme"].Value.ToString();
+                numDifficultyEntry.Value = Convert.ToDecimal(row.Cells["Difficulty"].Value);
+                numEnemyCount.Value = Convert.ToDecimal(row.Cells["Enemy Count"].Value);
+            }
+        }
+
+        // This method converts the form input fields into a GameAssetLevel object,
+        // which can then be used for database operations like insert or update.
+        private GameAssetLevel FormToLevel()
+        {
+            return new GameAssetLevel(
+                0, // ID is auto-generated on INSERT
+                txtNameEntry.Text,
+                (int)numDifficultyEntry.Value,
+                txtThemeEntry.Text,
+                (int)numEnemyCount.Value
+            );
+        }
+
+        // This method converts a DataGridViewRow into a GameAssetLevel object,
+        // which is useful for operations like delete where we need the ID and other properties of the level.
+        private GameAssetLevel RowToLevel(DataGridViewRow row)
+        {
+            return new GameAssetLevel(
+                Convert.ToInt32(row.Cells["Id"].Value),
+                row.Cells["Name"].Value.ToString(),
+                Convert.ToInt32(row.Cells["Difficulty"].Value),
+                row.Cells["Theme"].Value.ToString(),
+                Convert.ToInt32(row.Cells["Enemy Count"].Value)
+            );
+        }
+
+        private void btnUpdateLevel_Click(object sender, EventArgs e)
+        {
+            if (dgvLevelsManager.SelectedRows.Count == 0)
+            {
+                lbMessage.Text = "Select a level to update.";
+                return;
+            }
+
+            // Convert selected row to object so we know which ID to update
+            GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]);
+
+            // Update object with new form values
+            level.AssetName = txtNameEntry.Text;
+            level.Theme = txtThemeEntry.Text;
+            level.Difficulty = (int)numDifficultyEntry.Value;
+            level.EnemyCount = (int)numEnemyCount.Value;
+
+            string sql = @"UPDATE Levels
+                   SET Name = @name,
+                       Theme = @theme,
+                       Difficulty = @difficulty,
+                       [Enemy Count] = @enemyCount
+                   WHERE Id = @id";
+
+            var parameters = new Dictionary<string, object>
+            {
+                {"@id", level.AssetID},
+                {"@name", level.AssetName},
+                {"@theme", level.Theme},
+                {"@difficulty", level.Difficulty},
+                {"@enemyCount", level.EnemyCount}
+            };
+
+            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+
+            lbMessage.Text = rows > 0 ? "Level updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
+
+            LoadData();
+        }
+
     }
 }
