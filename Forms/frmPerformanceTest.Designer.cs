@@ -57,7 +57,7 @@
             // 
             // btnTestReaderLoad
             // 
-            btnTestReaderLoad.Location = new Point(55, 265);
+            btnTestReaderLoad.Location = new Point(554, 179);
             btnTestReaderLoad.Name = "btnTestReaderLoad";
             btnTestReaderLoad.Size = new Size(300, 58);
             btnTestReaderLoad.TabIndex = 3;
@@ -68,7 +68,7 @@
             // lbDataTableResult
             // 
             lbDataTableResult.AutoSize = true;
-            lbDataTableResult.Location = new Point(383, 188);
+            lbDataTableResult.Location = new Point(55, 257);
             lbDataTableResult.Name = "lbDataTableResult";
             lbDataTableResult.Size = new Size(0, 41);
             lbDataTableResult.TabIndex = 4;
@@ -76,7 +76,7 @@
             // lbReaderLoadResult
             // 
             lbReaderLoadResult.AutoSize = true;
-            lbReaderLoadResult.Location = new Point(383, 274);
+            lbReaderLoadResult.Location = new Point(554, 257);
             lbReaderLoadResult.Name = "lbReaderLoadResult";
             lbReaderLoadResult.Size = new Size(0, 41);
             lbReaderLoadResult.TabIndex = 5;
@@ -85,7 +85,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1120, 772);
+            ClientSize = new Size(933, 443);
             Controls.Add(lbReaderLoadResult);
             Controls.Add(lbDataTableResult);
             Controls.Add(btnTestReaderLoad);

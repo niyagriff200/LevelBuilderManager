@@ -68,7 +68,8 @@ namespace LevelBuilderManager.Data
             //Loop through the parameters and add them to the command
             foreach (var param in parameters)
             {
-                cmd.Parameters.AddWithValue(param.Key, param.Value ?? DBNull.Value);
+                cmd.Parameters.AddWithValue(param.Key, param.Value ?? DBNull.Value); //the ?? operator is used to handle null values by converting them to DBNull.Value,
+                                                                                     //which is the appropriate way to represent nulls in SQL parameters
             }
         }
     }
