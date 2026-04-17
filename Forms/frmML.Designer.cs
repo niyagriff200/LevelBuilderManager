@@ -34,6 +34,8 @@
             numEnemies = new NumericUpDown();
             numObstacles = new NumericUpDown();
             lbMessage = new Label();
+            lbEnemies = new Label();
+            lbObstacles = new Label();
             ((System.ComponentModel.ISupportInitialize)numEnemies).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numObstacles).BeginInit();
             SuspendLayout();
@@ -60,7 +62,7 @@
             // 
             // btnPredict
             // 
-            btnPredict.Location = new Point(30, 426);
+            btnPredict.Location = new Point(30, 494);
             btnPredict.Name = "btnPredict";
             btnPredict.Size = new Size(249, 58);
             btnPredict.TabIndex = 2;
@@ -70,7 +72,7 @@
             // 
             // numEnemies
             // 
-            numEnemies.Location = new Point(30, 247);
+            numEnemies.Location = new Point(30, 278);
             numEnemies.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
             numEnemies.Name = "numEnemies";
             numEnemies.Size = new Size(300, 47);
@@ -78,7 +80,7 @@
             // 
             // numObstacles
             // 
-            numObstacles.Location = new Point(30, 328);
+            numObstacles.Location = new Point(30, 406);
             numObstacles.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             numObstacles.Name = "numObstacles";
             numObstacles.Size = new Size(300, 47);
@@ -87,16 +89,36 @@
             // lbMessage
             // 
             lbMessage.AutoSize = true;
-            lbMessage.Location = new Point(424, 294);
+            lbMessage.Location = new Point(418, 350);
             lbMessage.Name = "lbMessage";
             lbMessage.Size = new Size(0, 41);
             lbMessage.TabIndex = 5;
+            // 
+            // lbEnemies
+            // 
+            lbEnemies.AutoSize = true;
+            lbEnemies.Location = new Point(30, 220);
+            lbEnemies.Name = "lbEnemies";
+            lbEnemies.Size = new Size(128, 41);
+            lbEnemies.TabIndex = 6;
+            lbEnemies.Text = "Enemies";
+            // 
+            // lbObstacles
+            // 
+            lbObstacles.AutoSize = true;
+            lbObstacles.Location = new Point(30, 350);
+            lbObstacles.Name = "lbObstacles";
+            lbObstacles.Size = new Size(147, 41);
+            lbObstacles.TabIndex = 7;
+            lbObstacles.Text = "Obstacles";
             // 
             // frmML
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(875, 638);
+            Controls.Add(lbObstacles);
+            Controls.Add(lbEnemies);
             Controls.Add(lbMessage);
             Controls.Add(numObstacles);
             Controls.Add(numEnemies);
@@ -120,5 +142,7 @@
         private NumericUpDown numEnemies;
         private NumericUpDown numObstacles;
         private Label lbMessage;
+        private Label lbEnemies;
+        private Label lbObstacles;
     }
 }
