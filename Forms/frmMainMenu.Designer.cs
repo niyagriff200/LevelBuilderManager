@@ -33,6 +33,7 @@
             btnManageTiles = new Button();
             btnAssignTtoL = new Button();
             btnPerformanceTest = new Button();
+            btnML = new Button();
             SuspendLayout();
             // 
             // lbTitle
@@ -83,13 +84,24 @@
             btnPerformanceTest.TabIndex = 4;
             btnPerformanceTest.Text = "Performance Testing";
             btnPerformanceTest.UseVisualStyleBackColor = true;
-            btnPerformanceTest.Click += this.btnPerformanceTest_Click;
+            btnPerformanceTest.Click += btnPerformanceTest_Click;
+            // 
+            // btnML
+            // 
+            btnML.Location = new Point(476, 664);
+            btnML.Name = "btnML";
+            btnML.Size = new Size(310, 58);
+            btnML.TabIndex = 5;
+            btnML.Text = "Machine Learning";
+            btnML.UseVisualStyleBackColor = true;
+            btnML.Click += btnML_Click;
             // 
             // frmMainMenu
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1290, 823);
+            Controls.Add(btnML);
             Controls.Add(btnPerformanceTest);
             Controls.Add(btnAssignTtoL);
             Controls.Add(btnManageTiles);
@@ -108,5 +120,6 @@
         private Button btnManageTiles;
         private Button btnAssignTtoL;
         private Button btnPerformanceTest;
+        private Button btnML;
     }
 }

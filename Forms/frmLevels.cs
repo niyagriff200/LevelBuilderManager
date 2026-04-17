@@ -85,6 +85,8 @@ namespace LevelBuilderManager
             LoadData();// Refresh the DataGridView to show the newly added level
         }
 
+
+
         // This event handler deletes the selected level from the database when the "Delete Level" button is clicked.
         private void btnDeleteLevel_Click(object sender, EventArgs e)
         {
