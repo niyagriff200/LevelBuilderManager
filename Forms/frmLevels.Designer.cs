@@ -59,11 +59,15 @@
             // 
             // dgvLevelsManager
             // 
+            dgvLevelsManager.AllowUserToAddRows = false;
+            dgvLevelsManager.AllowUserToDeleteRows = false;
             dgvLevelsManager.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLevelsManager.Location = new Point(550, 114);
+            dgvLevelsManager.Location = new Point(610, 114);
+            dgvLevelsManager.MultiSelect = false;
             dgvLevelsManager.Name = "dgvLevelsManager";
+            dgvLevelsManager.ReadOnly = true;
             dgvLevelsManager.RowHeadersWidth = 102;
-            dgvLevelsManager.Size = new Size(1080, 703);
+            dgvLevelsManager.Size = new Size(1233, 703);
             dgvLevelsManager.TabIndex = 1;
             dgvLevelsManager.CellClick += dgvLevelsManager_CellClick;
             // 
@@ -147,7 +151,7 @@
             // numEnemyCount
             // 
             numEnemyCount.Location = new Point(31, 571);
-            numEnemyCount.Maximum = new decimal(new int[] { 5, 0, 0, 0 });
+            numEnemyCount.Maximum = new decimal(new int[] { 20, 0, 0, 0 });
             numEnemyCount.Name = "numEnemyCount";
             numEnemyCount.Size = new Size(300, 47);
             numEnemyCount.TabIndex = 11;
@@ -175,7 +179,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1642, 829);
+            ClientSize = new Size(1855, 829);
             Controls.Add(btnUpdateLevel);
             Controls.Add(lbEnemyCount);
             Controls.Add(numEnemyCount);

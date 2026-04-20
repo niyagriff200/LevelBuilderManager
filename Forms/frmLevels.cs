@@ -95,23 +95,30 @@ namespace LevelBuilderManager
                 lbMessage.Text = "Select a level to delete.";
                 return;
             }
-            GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]); // Convert the selected row to a GameAssetLevel object to get the ID for deletion
 
-            string sql = "DELETE FROM Levels WHERE Id = @id";
+            var result = MessageBox.Show("Are you sure you want to delete this level?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected level
+            if (result == DialogResult.Yes)
             {
-                {"@id", level.AssetID}
-            };
 
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+                GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]); // Convert the selected row to a GameAssetLevel object to get the ID for deletion
 
-            if (rows > 0) // If at least one row was affected, the delete was successful
-                lbMessage.Text = "Level deleted.";
-            else
-                lbMessage.Text = "Delete failed.";
+                string sql = "DELETE FROM Levels WHERE Id = @id";
 
-            LoadData(); // Refresh the DataGridView to reflect the changes in the database
+                var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected level
+                {
+                    {"@id", level.AssetID}
+                };
+
+                int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+
+                if (rows > 0) // If at least one row was affected, the delete was successful
+                    lbMessage.Text = "Level deleted.";
+                else
+                    lbMessage.Text = "Delete failed.";
+
+                LoadData(); // Refresh the DataGridView to reflect the changes in the database
+            }
         }
 
         // This event handler populates the form input fields with the data from the selected row in the DataGridView,
@@ -162,36 +169,41 @@ namespace LevelBuilderManager
                 return;
             }
 
-            // Convert selected row to object so we know which ID to update
-            GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]);
 
-            // Update object with new form values
-            level.AssetName = txtNameEntry.Text;
-            level.Theme = txtThemeEntry.Text;
-            level.Difficulty = (int)numDifficultyEntry.Value;
-            level.EnemyCount = (int)numEnemyCount.Value;
-
-            string sql = @"UPDATE Levels
-                   SET Name = @name,
-                       Theme = @theme,
-                       Difficulty = @difficulty,
-                       [Enemy Count] = @enemyCount
-                   WHERE Id = @id";
-
-            var parameters = new Dictionary<string, object>
+            var result = MessageBox.Show("Are you sure you want to update this level?", "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
-                {"@id", level.AssetID},
-                {"@name", level.AssetName},
-                {"@theme", level.Theme},
-                {"@difficulty", level.Difficulty},
-                {"@enemyCount", level.EnemyCount}
-            };
+                // Convert selected row to object so we know which ID to update
+                GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]);
 
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+                // Update object with new form values
+                level.AssetName = txtNameEntry.Text;
+                level.Theme = txtThemeEntry.Text;
+                level.Difficulty = (int)numDifficultyEntry.Value;
+                level.EnemyCount = (int)numEnemyCount.Value;
 
-            lbMessage.Text = rows > 0 ? "Level updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
+                string sql = @"UPDATE Levels
+                       SET Name = @name,
+                           Theme = @theme,
+                           Difficulty = @difficulty,
+                           [Enemy Count] = @enemyCount
+                       WHERE Id = @id";
 
-            LoadData();
+                var parameters = new Dictionary<string, object>
+                {
+                    {"@id", level.AssetID},
+                    {"@name", level.AssetName},
+                    {"@theme", level.Theme},
+                    {"@difficulty", level.Difficulty},
+                    {"@enemyCount", level.EnemyCount}
+                };
+
+                int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+
+                lbMessage.Text = rows > 0 ? "Level updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
+
+                LoadData();
+            }
         }
 
     }

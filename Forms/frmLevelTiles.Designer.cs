@@ -103,11 +103,15 @@
             // 
             // dgvLevelTilesManager
             // 
+            dgvLevelTilesManager.AllowUserToAddRows = false;
+            dgvLevelTilesManager.AllowUserToDeleteRows = false;
             dgvLevelTilesManager.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLevelTilesManager.Location = new Point(585, 82);
+            dgvLevelTilesManager.Location = new Point(676, 83);
+            dgvLevelTilesManager.MultiSelect = false;
             dgvLevelTilesManager.Name = "dgvLevelTilesManager";
+            dgvLevelTilesManager.ReadOnly = true;
             dgvLevelTilesManager.RowHeadersWidth = 102;
-            dgvLevelTilesManager.Size = new Size(1080, 703);
+            dgvLevelTilesManager.Size = new Size(1265, 703);
             dgvLevelTilesManager.TabIndex = 21;
             dgvLevelTilesManager.CellClick += dgvLevelTilesManager_CellClick;
             // 
@@ -116,7 +120,7 @@
             numTileCount.Location = new Point(26, 524);
             numTileCount.Name = "numTileCount";
             numTileCount.Size = new Size(300, 47);
-            numTileCount.TabIndex = 30;
+            numTileCount.TabIndex = 50;
             // 
             // cmbLevelNameID
             // 
@@ -156,7 +160,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1677, 798);
+            ClientSize = new Size(1963, 798);
             Controls.Add(btnUpdateLevelTile);
             Controls.Add(lbMessage);
             Controls.Add(cmbTileNameID);

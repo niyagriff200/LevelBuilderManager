@@ -35,6 +35,8 @@ namespace LevelBuilderManager
             frmOriginal.Show();
         }
 
+        // This method tests loading data using a DataTable, which is a common pattern for many applications
+        // but can have performance implications compared to using a SqlDataReader directly.
         private void btnTestDataTable_Click(object sender, EventArgs e)
         {
             // Start timing
@@ -50,6 +52,8 @@ namespace LevelBuilderManager
             lbDataTableResult.Text = $"DataTable Load Time: {sw.ElapsedMilliseconds} ms";
         }
 
+        // This method tests loading data using a SqlDataReader and looping through the results, which is a common pattern for performance-sensitive code.
+        // It simulates real work by accessing the fields of each record, which is often where performance differences can be observed compared to using a DataTable.
         private void btnTestReaderLoad_Click(object sender, EventArgs e)
         {
             Stopwatch sw = new Stopwatch();

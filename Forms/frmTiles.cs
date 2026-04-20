@@ -97,23 +97,29 @@ namespace LevelBuilderManager
                 lbMessage.Text = "Select a tile to delete.";
                 return;
             }
-            GameAssetTile tile = RowToTile(dgvTilesManager.SelectedRows[0]); // Convert the selected row to a GameAssetTile object to get the ID for deletion
 
-            string sql = "DELETE FROM Tiles WHERE Id = @id";
-
-            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected tile
+            var confirmResult = MessageBox.Show("Are you sure you want to delete this tile?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirmResult == DialogResult.Yes)
             {
-                {"@id", tile.AssetID}
-            };
 
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+                GameAssetTile tile = RowToTile(dgvTilesManager.SelectedRows[0]); // Convert the selected row to a GameAssetTile object to get the ID for deletion
 
-            if (rows > 0) // If at least one row was affected, the delete was successful
-                lbMessage.Text = "Tile deleted.";
-            else
-                lbMessage.Text = "Delete failed.";
+                string sql = "DELETE FROM Tiles WHERE Id = @id";
 
-            LoadData(); // Refresh the DataGridView to reflect the changes in the database
+                var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected tile
+                {
+                    {"@id", tile.AssetID}
+                };
+
+                int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+
+                if (rows > 0) // If at least one row was affected, the delete was successful
+                    lbMessage.Text = "Tile deleted.";
+                else
+                    lbMessage.Text = "Delete failed.";
+
+                LoadData(); // Refresh the DataGridView to reflect the changes in the database
+            }
         }
 
         // This event handler populates the form input fields with the data from the selected row in the DataGridView,
@@ -161,33 +167,37 @@ namespace LevelBuilderManager
                 return;
             }
 
-            // Convert selected row to object so we know which ID to update
-            GameAssetTile tile = RowToTile(dgvTilesManager.SelectedRows[0]);
-
-            // Update object with new form values
-            tile.AssetName = txtNameEntry.Text;
-            tile.Type = txtTypeEntry.Text;
-            tile.CanBeWalkedOn = cbCanBeWalkedOn.Checked;
-
-            string sql = @"UPDATE Tiles
-                   SET Name = @name,
-                       Type = @type,
-                       [Can Be Walked On] = @canBeWalkedOn
-                   WHERE Id = @id";
-
-            var parameters = new Dictionary<string, object>
+            var confirmResult = MessageBox.Show("Are you sure you want to update this tile?", "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmResult == DialogResult.Yes)
             {
-                {"@id", tile.AssetID},
-                {"@name", tile.AssetName},
-                {"@type", tile.Type},
-                {"@canBeWalkedOn", tile.CanBeWalkedOn}
-            };
+                // Convert selected row to object so we know which ID to update
+                GameAssetTile tile = RowToTile(dgvTilesManager.SelectedRows[0]);
 
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+                // Update object with new form values
+                tile.AssetName = txtNameEntry.Text;
+                tile.Type = txtTypeEntry.Text;
+                tile.CanBeWalkedOn = cbCanBeWalkedOn.Checked;
 
-            lbMessage.Text = rows > 0 ? "Tile updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
+                string sql = @"UPDATE Tiles
+                       SET Name = @name,
+                           Type = @type,
+                           [Can Be Walked On] = @canBeWalkedOn
+                       WHERE Id = @id";
 
-            LoadData();
+                var parameters = new Dictionary<string, object>
+                {
+                    {"@id", tile.AssetID},
+                    {"@name", tile.AssetName},
+                    {"@type", tile.Type},
+                    {"@canBeWalkedOn", tile.CanBeWalkedOn}
+                };
+
+                int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+
+                lbMessage.Text = rows > 0 ? "Tile updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
+
+                LoadData();
+            }
         }
     }
     

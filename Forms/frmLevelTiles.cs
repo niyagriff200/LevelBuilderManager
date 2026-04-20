@@ -125,6 +125,12 @@ namespace LevelBuilderManager
                 return;
             }
 
+            var result = MessageBox.Show("Are you sure you want to delete this record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes)
+            {
+                return;
+            }
+
             //Get the levelID and tileID of the selected row from the DataGridView, which correspond to the record in the LevelTiles table that we want to delete.
             int levelID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["LevelID"].Value);
             int tileID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["TileID"].Value);
@@ -157,37 +163,42 @@ namespace LevelBuilderManager
                 return;
             }
 
-            // Original keys from the selected row
-            int originalLevelID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["LevelID"].Value);
-            int originalTileID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["TileID"].Value);
+            var result = MessageBox.Show("Are you sure you want to update this record?", "Confirm Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            // New values from the form
-            int newLevelID = (int)cmbLevelNameID.SelectedValue;
-            int newTileID = (int)cmbTileNameID.SelectedValue;
-            int tileCount = (int)numTileCount.Value;
-
-            // Construct a SQL query to update the record in the LevelTiles table where the original LevelID and TileID match the selected values, setting the new LevelID, TileID, and TileCount.
-            string sql = @"UPDATE LevelTiles
-                   SET LevelID = @newLevelID,
-                       TileID = @newTileID,
-                       TileCount = @tileCount
-                   WHERE LevelID = @originalLevelID AND TileID = @originalTileID";
-
-            // Create a dictionary of parameters to pass to the DBHelper method, mapping the parameter names in the SQL query to the actual values from the form controls and the original selected row.
-            var parameters = new Dictionary<string, object>
+            if (result == DialogResult.Yes)
             {
-                {"@newLevelID", newLevelID},
-                {"@newTileID", newTileID},
-                {"@tileCount", tileCount},
-                {"@originalLevelID", originalLevelID},
-                {"@originalTileID", originalTileID}
-            };
+                // Original keys from the selected row
+                int originalLevelID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["LevelID"].Value);
+                int originalTileID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["TileID"].Value);
 
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+                // New values from the form
+                int newLevelID = (int)cmbLevelNameID.SelectedValue;
+                int newTileID = (int)cmbTileNameID.SelectedValue;
+                int tileCount = (int)numTileCount.Value;
 
-            lbMessage.Text = rows > 0 ? "Updated!" : "Update failed."; // If the number of rows affected is greater than 0, it's successful, otherwise it failed.
+                // Construct a SQL query to update the record in the LevelTiles table where the original LevelID and TileID match the selected values, setting the new LevelID, TileID, and TileCount.
+                string sql = @"UPDATE LevelTiles
+                       SET LevelID = @newLevelID,
+                           TileID = @newTileID,
+                           TileCount = @tileCount
+                       WHERE LevelID = @originalLevelID AND TileID = @originalTileID";
 
-            LoadData();
+                // Create a dictionary of parameters to pass to the DBHelper method, mapping the parameter names in the SQL query to the actual values from the form controls and the original selected row.
+                var parameters = new Dictionary<string, object>
+                {
+                    {"@newLevelID", newLevelID},
+                    {"@newTileID", newTileID},
+                    {"@tileCount", tileCount},
+                    {"@originalLevelID", originalLevelID},
+                    {"@originalTileID", originalTileID}
+                };
+
+                int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+
+                lbMessage.Text = rows > 0 ? "Updated!" : "Update failed."; // If the number of rows affected is greater than 0, it's successful, otherwise it failed.
+
+                LoadData();
+            }
         }
 
 

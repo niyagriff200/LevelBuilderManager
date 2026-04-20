@@ -107,11 +107,15 @@
             // 
             // dgvTilesManager
             // 
+            dgvTilesManager.AllowUserToAddRows = false;
+            dgvTilesManager.AllowUserToDeleteRows = false;
             dgvTilesManager.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvTilesManager.Location = new Point(584, 109);
+            dgvTilesManager.Location = new Point(685, 111);
+            dgvTilesManager.MultiSelect = false;
             dgvTilesManager.Name = "dgvTilesManager";
+            dgvTilesManager.ReadOnly = true;
             dgvTilesManager.RowHeadersWidth = 102;
-            dgvTilesManager.Size = new Size(1080, 703);
+            dgvTilesManager.Size = new Size(1168, 703);
             dgvTilesManager.TabIndex = 10;
             dgvTilesManager.CellClick += dgvTilesManager_CellClick;
             // 
@@ -158,7 +162,7 @@
             // 
             AutoScaleDimensions = new SizeF(17F, 41F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1676, 880);
+            ClientSize = new Size(1876, 880);
             Controls.Add(btnUpdateTile);
             Controls.Add(lbMessage);
             Controls.Add(lbCanBeWalkedOn);

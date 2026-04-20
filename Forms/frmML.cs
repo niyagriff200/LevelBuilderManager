@@ -6,6 +6,8 @@ namespace LevelBuilderManager.Forms
     {
         //So I can return to the main menu when I close this form
         private frmMainMenu frmOriginal;
+
+        // The ML model instance
         private MLLevel _ml = new MLLevel();
 
 
@@ -36,6 +38,8 @@ namespace LevelBuilderManager.Forms
 
         private void btnTrainModel_Click(object sender, EventArgs e)
         {
+            // Train the model and display results
+            lbMessage.Text = "Training model...";
             try
             {
                 // Train the model using your CSV file
@@ -52,11 +56,12 @@ namespace LevelBuilderManager.Forms
 
         private void btnPredict_Click(object sender, EventArgs e)
         {
+            // Predict the difficulty based on user input for enemies and obstacles
             try
             {
                 if (!_ml.IsReady)
                 {
-                    lbMessage.Text = "Train the model first.";
+                    lbMessage.Text = "Train the model first."; // Ensure the model is trained before making predictions
                     return;
                 }
 
