@@ -1,13 +1,6 @@
 ﻿using LevelBuilderManager.Classes;
 using LevelBuilderManager.Data;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 
 namespace LevelBuilderManager
 {
@@ -16,6 +9,7 @@ namespace LevelBuilderManager
         //So I can return to the main menu when I close this form
         private frmMainMenu frmOriginal;
 
+        private LevelManagerRepo repo = new LevelManagerRepo(); // Create an instance of the repository class that handles database operations for levels
         public frmTiles()
         {
             InitializeComponent();
@@ -69,17 +63,7 @@ namespace LevelBuilderManager
 
             GameAssetTile tile = FormToTile(); // Convert the form input fields into a GameAssetTile object to prepare for insertion into the database
 
-            string sql = @"INSERT INTO Tiles (Name, Type, [Can Be Walked On])
-                   VALUES (@name, @type, @canBeWalkedOn)"; // SQL query to insert a new tile into the Tiles table, using parameters to prevent SQL injection
-
-            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the properties of the GameAssetTile object
-            {
-                {"@name", tile.AssetName},
-                {"@type", tile.Type},
-                {"@canBeWalkedOn", tile.CanBeWalkedOn}
-            };
-
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the insert query and get the number of affected rows to determine if the insert was successful
+           int rows = repo.AddTile(tile);
 
             if (rows > 0) // If at least one row was affected, the insert was successful
                 lbMessage.Text = "Tile added successfully!";
@@ -102,16 +86,9 @@ namespace LevelBuilderManager
             if (confirmResult == DialogResult.Yes)
             {
 
-                GameAssetTile tile = RowToTile(dgvTilesManager.SelectedRows[0]); // Convert the selected row to a GameAssetTile object to get the ID for deletion
+                GameAssetTile tile = repo.RowToTile(dgvTilesManager.SelectedRows[0]); // Convert the selected row to a GameAssetTile object to get the ID for deletion
 
-                string sql = "DELETE FROM Tiles WHERE Id = @id";
-
-                var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected tile
-                {
-                    {"@id", tile.AssetID}
-                };
-
-                int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+                int rows = repo.Delete(tile.AssetID); // Execute the delete query and get the number of affected rows
 
                 if (rows > 0) // If at least one row was affected, the delete was successful
                     lbMessage.Text = "Tile deleted.";
@@ -146,18 +123,7 @@ namespace LevelBuilderManager
                 cbCanBeWalkedOn.Checked
             );
         }
-
-        // This method converts a DataGridViewRow into a GameAssetTile object,
-        // which is useful for operations like delete where we need the ID and other properties of the tile.
-        private GameAssetTile RowToTile(DataGridViewRow row)
-        {
-            return new GameAssetTile(
-                Convert.ToInt32(row.Cells["Id"].Value),
-                row.Cells["Name"].Value.ToString(),
-                row.Cells["Type"].Value.ToString(),
-                Convert.ToBoolean(row.Cells["Can Be Walked On"].Value)
-            );
-        }
+        
 
         private void btnUpdateTile_Click(object sender, EventArgs e)
         {
@@ -171,28 +137,14 @@ namespace LevelBuilderManager
             if (confirmResult == DialogResult.Yes)
             {
                 // Convert selected row to object so we know which ID to update
-                GameAssetTile tile = RowToTile(dgvTilesManager.SelectedRows[0]);
+                GameAssetTile tile = repo.RowToTile(dgvTilesManager.SelectedRows[0]);
 
                 // Update object with new form values
                 tile.AssetName = txtNameEntry.Text;
                 tile.Type = txtTypeEntry.Text;
                 tile.CanBeWalkedOn = cbCanBeWalkedOn.Checked;
 
-                string sql = @"UPDATE Tiles
-                       SET Name = @name,
-                           Type = @type,
-                           [Can Be Walked On] = @canBeWalkedOn
-                       WHERE Id = @id";
-
-                var parameters = new Dictionary<string, object>
-                {
-                    {"@id", tile.AssetID},
-                    {"@name", tile.AssetName},
-                    {"@type", tile.Type},
-                    {"@canBeWalkedOn", tile.CanBeWalkedOn}
-                };
-
-                int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+                int rows = repo.UpdateTile(tile); // Execute the update query and get the number of affected rows
 
                 lbMessage.Text = rows > 0 ? "Tile updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
 

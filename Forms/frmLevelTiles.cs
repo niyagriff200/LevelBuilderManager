@@ -9,6 +9,8 @@ namespace LevelBuilderManager
         //So I can return to the main menu when I close this form
         private frmMainMenu frmOriginal;
 
+        private LevelManagerRepo repo = new LevelManagerRepo();
+
         public frmLevelTiles()
         {
             InitializeComponent();
@@ -95,20 +97,7 @@ namespace LevelBuilderManager
             int tileID = (int)cmbTileNameID.SelectedValue;
             int tileCount = (int)numTileCount.Value;
 
-            //Construct a SQL query to insert a new record into the LevelTiles table with the selected level ID, tile ID, and tile count.
-            string sql = @"INSERT INTO LevelTiles (LevelID, TileID, TileCount)
-                   VALUES (@levelID, @tileID, @tileCount)";
-
-            //Create a dictionary of parameters to pass to the DBHelper method, mapping the parameter names in the SQL query to the actual values from the form controls.
-            var parameters = new Dictionary<string, object>
-            {
-                {"@levelID", levelID},
-                {"@tileID", tileID},
-                {"@tileCount", tileCount}
-            };
-
-            //Execute the SQL query using the DBHelper method, which will return the number of rows affected by the query.
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+            int rows = repo.AddTileToLevel(levelID, tileID, tileCount); //Call the AddTileToLevel method of the repository to insert the new level-tile association into the database, and get the number of affected rows.
 
             lbMessage.Text = rows > 0 ? "LevelTile added!" : "Insert failed."; //If the number of rows affected is greater than 0, it's successful, otherwise it failed.
 
@@ -135,16 +124,7 @@ namespace LevelBuilderManager
             int levelID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["LevelID"].Value);
             int tileID = Convert.ToInt32(dgvLevelTilesManager.SelectedRows[0].Cells["TileID"].Value);
 
-            string sql = "DELETE FROM LevelTiles WHERE LevelID = @levelID AND TileID = @tileID"; //Construct a SQL query to delete the record from the LevelTiles table where the LevelID and TileID match the selected values.
-
-            //Create a dictionary of parameters to pass to the DBHelper method, mapping the parameter names in the SQL query to the actual values from the selected row.
-            var parameters = new Dictionary<string, object>
-            {
-                {"@levelID", levelID},
-                {"@tileID", tileID}
-            };
-
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+            int rows = repo.Delete(levelID, tileID); //Execute the delete query using the LevelManagerRepo class, which will return the number of rows affected by the query.
 
             lbMessage.Text = rows > 0 ? "Deleted!" : "Delete failed.";
 
@@ -176,24 +156,7 @@ namespace LevelBuilderManager
                 int newTileID = (int)cmbTileNameID.SelectedValue;
                 int tileCount = (int)numTileCount.Value;
 
-                // Construct a SQL query to update the record in the LevelTiles table where the original LevelID and TileID match the selected values, setting the new LevelID, TileID, and TileCount.
-                string sql = @"UPDATE LevelTiles
-                       SET LevelID = @newLevelID,
-                           TileID = @newTileID,
-                           TileCount = @tileCount
-                       WHERE LevelID = @originalLevelID AND TileID = @originalTileID";
-
-                // Create a dictionary of parameters to pass to the DBHelper method, mapping the parameter names in the SQL query to the actual values from the form controls and the original selected row.
-                var parameters = new Dictionary<string, object>
-                {
-                    {"@newLevelID", newLevelID},
-                    {"@newTileID", newTileID},
-                    {"@tileCount", tileCount},
-                    {"@originalLevelID", originalLevelID},
-                    {"@originalTileID", originalTileID}
-                };
-
-                int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+                int rows = repo.UpdateLevelTile(originalLevelID, originalTileID, newLevelID, newTileID, tileCount); // Execute the update query using the LevelManagerRepo class, which will return the number of rows affected by the query.
 
                 lbMessage.Text = rows > 0 ? "Updated!" : "Update failed."; // If the number of rows affected is greater than 0, it's successful, otherwise it failed.
 

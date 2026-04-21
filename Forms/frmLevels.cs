@@ -10,6 +10,7 @@ namespace LevelBuilderManager
         //So I can return to the main menu when I close this form
         private frmMainMenu frmOriginal;
 
+        private LevelManagerRepo repo = new LevelManagerRepo(); // Create an instance of the repository class that handles database operations for levels
         public frmLevels()
         {
             InitializeComponent();
@@ -64,18 +65,7 @@ namespace LevelBuilderManager
 
             GameAssetLevel level = FormToLevel(); // Convert the form input fields into a GameAssetLevel object to prepare for insertion into the database
 
-            string sql = @"INSERT INTO Levels (Name, Theme, Difficulty, [Enemy Count])
-                   VALUES (@name, @theme, @difficulty, @enemyCount)"; // SQL query to insert a new level into the Levels table, using parameters to prevent SQL injection
-
-            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the properties of the GameAssetLevel object
-            {
-                {"@name", level.AssetName},
-                {"@theme", level.Theme},
-                {"@difficulty", level.Difficulty},
-                {"@enemyCount", level.EnemyCount}
-            };
-
-            int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the insert query and get the number of affected rows to determine if the insert was successful
+            int rows = repo.AddLevel(level); // Call the AddLevel method of the repository to insert the new level into the database, and get the number of affected rows
 
             if (rows > 0) // If at least one row was affected, the insert was successful
                 lbMessage.Text = "Level added successfully!";
@@ -101,16 +91,12 @@ namespace LevelBuilderManager
             if (result == DialogResult.Yes)
             {
 
-                GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]); // Convert the selected row to a GameAssetLevel object to get the ID for deletion
+                GameAssetLevel level = repo.RowToLevel(dgvLevelsManager.SelectedRows[0]); // Convert the selected row to a GameAssetLevel object to get the ID for deletion
 
-                string sql = "DELETE FROM Levels WHERE Id = @id";
+                
 
-                var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected level
-                {
-                    {"@id", level.AssetID}
-                };
-
-                int rows = DBHelper.ExecuteNonQuery(sql, parameters); // Execute the delete query and get the number of affected rows
+                // Execute the delete query and get the number of affected rows
+                int rows = repo.Delete(level.AssetID);
 
                 if (rows > 0) // If at least one row was affected, the delete was successful
                     lbMessage.Text = "Level deleted.";
@@ -148,18 +134,6 @@ namespace LevelBuilderManager
             );
         }
 
-        // This method converts a DataGridViewRow into a GameAssetLevel object,
-        // which is useful for operations like delete where we need the ID and other properties of the level.
-        private GameAssetLevel RowToLevel(DataGridViewRow row)
-        {
-            return new GameAssetLevel(
-                Convert.ToInt32(row.Cells["Id"].Value),
-                row.Cells["Name"].Value.ToString(),
-                Convert.ToInt32(row.Cells["Difficulty"].Value),
-                row.Cells["Theme"].Value.ToString(),
-                Convert.ToInt32(row.Cells["Enemy Count"].Value)
-            );
-        }
 
         private void btnUpdateLevel_Click(object sender, EventArgs e)
         {
@@ -174,7 +148,7 @@ namespace LevelBuilderManager
             if (result == DialogResult.Yes)
             {
                 // Convert selected row to object so we know which ID to update
-                GameAssetLevel level = RowToLevel(dgvLevelsManager.SelectedRows[0]);
+                GameAssetLevel level = repo.RowToLevel(dgvLevelsManager.SelectedRows[0]);
 
                 // Update object with new form values
                 level.AssetName = txtNameEntry.Text;
@@ -182,23 +156,7 @@ namespace LevelBuilderManager
                 level.Difficulty = (int)numDifficultyEntry.Value;
                 level.EnemyCount = (int)numEnemyCount.Value;
 
-                string sql = @"UPDATE Levels
-                       SET Name = @name,
-                           Theme = @theme,
-                           Difficulty = @difficulty,
-                           [Enemy Count] = @enemyCount
-                       WHERE Id = @id";
-
-                var parameters = new Dictionary<string, object>
-                {
-                    {"@id", level.AssetID},
-                    {"@name", level.AssetName},
-                    {"@theme", level.Theme},
-                    {"@difficulty", level.Difficulty},
-                    {"@enemyCount", level.EnemyCount}
-                };
-
-                int rows = DBHelper.ExecuteNonQuery(sql, parameters);
+                int rows = repo.UpdateLevel(level); // Execute the update query and get the number of affected rows
 
                 lbMessage.Text = rows > 0 ? "Level updated!" : "Update failed."; //if at least one row was affected, the update was successful, else it failed
 
