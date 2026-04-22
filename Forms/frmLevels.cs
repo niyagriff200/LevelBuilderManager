@@ -96,7 +96,7 @@ namespace LevelBuilderManager
                 
 
                 // Execute the delete query and get the number of affected rows
-                int rows = repo.Delete(level.AssetID);
+                int rows = repo.DeleteLevel(level.AssetID);
 
                 if (rows > 0) // If at least one row was affected, the delete was successful
                     lbMessage.Text = "Level deleted.";

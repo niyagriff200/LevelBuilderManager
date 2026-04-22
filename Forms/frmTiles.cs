@@ -88,7 +88,7 @@ namespace LevelBuilderManager
 
                 GameAssetTile tile = repo.RowToTile(dgvTilesManager.SelectedRows[0]); // Convert the selected row to a GameAssetTile object to get the ID for deletion
 
-                int rows = repo.Delete(tile.AssetID); // Execute the delete query and get the number of affected rows
+                int rows = repo.DeleteTile(tile.AssetID); // Execute the delete query and get the number of affected rows
 
                 if (rows > 0) // If at least one row was affected, the delete was successful
                     lbMessage.Text = "Tile deleted.";

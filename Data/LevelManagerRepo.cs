@@ -8,7 +8,7 @@ namespace LevelBuilderManager.Data
 {
     public class LevelManagerRepo
     {
-        public int Delete(int id)
+        public int DeleteLevel(int id)
         {
             // Implementation for deleting a level or tile from the database using the provided ID
             string sql = "DELETE FROM Levels WHERE Id = @id";
@@ -20,6 +20,18 @@ namespace LevelBuilderManager.Data
 
             int rows = DBHelper.ExecuteNonQuery(sql, parameters);
 
+            return rows; // Return the number of affected rows to indicate whether the delete was successful
+        }
+
+        public int DeleteTile(int id)
+        {
+            // Implementation for deleting a level or tile from the database using the provided ID
+            string sql = "DELETE FROM Tiles WHERE Id = @id";
+            var parameters = new Dictionary<string, object> // Create parameters for the SQL query, using the ID of the selected tile
+                {
+                    {"@id", id}
+                };
+            int rows = DBHelper.ExecuteNonQuery(sql, parameters);
             return rows; // Return the number of affected rows to indicate whether the delete was successful
         }
 
